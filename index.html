@@ -21,6 +21,23 @@
     </div>
   </header>
 
+  <!-- MAIN -->
+  <section class="posts d-flex flex-column gap-3 p-3" style="min-height: calc(64px + 64px + 335px); padding: 4rem;">
+    <header class="d-flex justify-content-end">
+      <button class="show__posts btn btn-outline-secondary">ver anuncios</button>
+    </header>
+    <main class="posts__container" style="position:relative; display: grid; grid-template-columns: repeat(3,1fr); justify-items: center; align-items: center; gap: 2rem;">
+
+      <!-- SNNIPER -->
+      <div class="d-flex justify-content-center align-item-center spinner visually-hidden" style="position: absolute; translate: 50% 0;">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </main>
+  </section>
+
+
 </body>
 
 </html>
