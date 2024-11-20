@@ -2,9 +2,9 @@
 import { getData } from '../posts/postsModel.js';
 import { buildPost } from '../posts/postsView.js';
 
-export const fireEvent = (eventName, message, type, element) => {
+export const fireEvent = (message, type, element) => {
   // creamos un evento personalizado cuando ocurre un error al cargar los anuncios
-  const customEvent = new CustomEvent(eventName, {
+  const customEvent = new CustomEvent('userMessage', {
     detail: {
       message,
       type,
@@ -51,14 +51,9 @@ export const postsController = async (postsContainer) => {
     //agregamos al DOM el html de todos los posts
     postsContainer.innerHTML = showPosts;
 
-    fireEvent(
-      'PostsLoaded',
-      ' Anuncios cargados con éxito.',
-      'success',
-      postsContainer,
-    );
+    fireEvent(' Anuncios cargados con éxito.', 'success', postsContainer);
   } catch (error) {
     // creamos un evento personalizado cuando ocurre un error al cargar los anuncios
-    fireEvent('loadingPostsError', error.message, 'danger', postsContainer);
+    fireEvent(error.message, 'danger', postsContainer);
   }
 };

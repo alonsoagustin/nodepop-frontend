@@ -29,12 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // iniciamos el controlador de anuncios
     postsController(postsContainer);
 
-    postsContainer.addEventListener('PostsLoaded', (event) => {
-      showMessage(event.detail.message, event.detail.type);
-    });
-
-    // configuramos un listener para mostrar mensajes si hay un error al cargar los anuncios.
-    postsContainer.addEventListener('loadingPostsError', (event) => {
+    // configuramos un listener para mostrar mensajes al cargar los anuncios.
+    postsContainer.addEventListener('userMessage', (event) => {
       showMessage(event.detail.message, event.detail.type);
     });
   }, 3000);
