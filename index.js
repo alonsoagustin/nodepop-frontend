@@ -1,5 +1,6 @@
 import { postsController } from './posts/postsController.js';
 import { messageController } from './message/messageController.js';
+import { spinnerController } from './spinner/spinnerController.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   /**
@@ -13,24 +14,24 @@ document.addEventListener('DOMContentLoaded', () => {
    * 5. Configura un listener para mostrar mensajes de error si ocurre un fallo al cargar los posts.
    *
    */
+
+  const postsContainer = document.querySelector('.posts__container');
+  const messageContainer = document.querySelector('.message__container');
+  const spinnerContainer = document.querySelector('.spinner__container');
+
+  // iniciamos el controlador del spinner
+  spinnerController(spinnerContainer);
+
   setTimeout(() => {
-    const postsContainer = document.querySelector('.posts__container');
-    const messageContainer = document.querySelector('.message__container');
-    const spinnerContainer = document.querySelector('.spinner__container');
+    // iniciamos el controlador de anuncios
+    postsController(postsContainer);
 
-    // mostramos el spinner
-    spinnerContainer.classList.toggle('visually-hidden');
-    setTimeout(() => {
-      // iniciamos el controlador de anuncios
-      postsController(postsContainer);
+    // iniciamos el controlador de mensajes
+    const showMessage = messageController(messageContainer);
 
-      // iniciamos el controlador de mensajes
-      const showMessage = messageController(messageContainer);
-
-      // configuramos un listener para mostrar mensajes si hay un error al cargar los anuncios.
-      postsContainer.addEventListener('loadingPostsError', (event) => {
-        showMessage(event.detail);
-      });
-    }, 0);
-  }, 2000);
+    // configuramos un listener para mostrar mensajes si hay un error al cargar los anuncios.
+    postsContainer.addEventListener('loadingPostsError', (event) => {
+      showMessage(event.detail);
+    });
+  }, 3000);
 });
