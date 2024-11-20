@@ -42,7 +42,10 @@ export const postsController = async (postsContainer) => {
   } catch (error) {
     // creamos un evento personalizado cuando ocurre un error al cargar los anuncios
     const customEvent = new CustomEvent('loadingPostsError', {
-      detail: error.message,
+      detail: {
+        message: error.message,
+        type: 'danger',
+      },
     });
     postsContainer.dispatchEvent(customEvent);
   }
