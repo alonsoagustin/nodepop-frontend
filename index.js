@@ -23,11 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
   spinnerController(spinnerContainer);
 
   setTimeout(() => {
+    // iniciamos el controlador de mensajes
+    const showMessage = messageController(messageContainer);
+
     // iniciamos el controlador de anuncios
     postsController(postsContainer);
 
-    // iniciamos el controlador de mensajes
-    const showMessage = messageController(messageContainer);
+    postsContainer.addEventListener('PostsLoaded', (event) => {
+      showMessage(event.detail.message, event.detail.type);
+    });
 
     // configuramos un listener para mostrar mensajes si hay un error al cargar los anuncios.
     postsContainer.addEventListener('loadingPostsError', (event) => {

@@ -39,6 +39,11 @@ export const postsController = async (postsContainer) => {
 
     //agregamos al DOM el html de todos los posts
     postsContainer.innerHTML = showPosts;
+
+    const customEvent = new CustomEvent('PostsLoaded', {
+      detail: { message: ' Anuncios cargados con éxito.', type: 'success' },
+    });
+    postsContainer.dispatchEvent(customEvent);
   } catch (error) {
     // creamos un evento personalizado cuando ocurre un error al cargar los anuncios
     const customEvent = new CustomEvent('loadingPostsError', {

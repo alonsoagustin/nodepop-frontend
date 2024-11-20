@@ -9,6 +9,9 @@ export const messageController = (messageContainer) => {
   const showMessage = (message, type = 'success') => {
     messageContainer.classList.toggle('visually-hidden');
     messageContainer.innerHTML = renderMessage(message, type);
+    setTimeout(() => {
+      messageContainer.classList.toggle('visually-hidden');
+    }, 5000);
   };
   return showMessage;
 };
