@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // configuramos un listener para mostrar mensajes si hay un error al cargar los anuncios.
     postsContainer.addEventListener('loadingPostsError', (event) => {
-      showMessage(event.detail);
+      showMessage(event.detail.message, event.detail.type);
     });
   }, 3000);
 });
