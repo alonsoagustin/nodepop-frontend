@@ -1,6 +1,7 @@
 import { fireEvent } from '../posts/postsController.js';
+import { createUser } from './signupModel.js';
 
-function validateEmailFormat(input) {
+export function validateEmailFormat(input) {
   let regex =
     /[-A-Za-z0-9!#$%&'*+\/=?^_`{|}~]+(?:\.[-A-Za-z0-9!#$%&'*+\/=?^_`{|}~]+)*@(?:[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?/i;
   return regex.test(input);
@@ -30,7 +31,26 @@ export const signupController = (form) => {
     errors.forEach((error) => {
       fireEvent(error, 'danger', form);
     });
-  });
 
-  // llamar a la API para crear el usuario
+    const userObject = {
+      username: userEmail,
+      password: userPassword,
+    };
+
+    if (errors.length === 0) {
+      // si no hay errores llamamos a la api mediante un metodo POST
+      handlerCreateUser(userObject);
+    }
+  });
+};
+
+const handlerCreateUser = async (userObject) => {
+  try {
+    // hacemos un POST request a la API para crear el usuario
+    await createUser(userObject);
+    window.location.href = 'http://127.0.0.1:8080/index.html';
+  } catch (error) {
+    const form = document.querySelector('form');
+    fireEvent(error.message, 'danger', form);
+  }
 };
