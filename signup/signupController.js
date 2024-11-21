@@ -1,5 +1,11 @@
 import { fireEvent } from '../posts/postsController.js';
 
+function validateEmailFormat(input) {
+  let regex =
+    /[-A-Za-z0-9!#$%&'*+\/=?^_`{|}~]+(?:\.[-A-Za-z0-9!#$%&'*+\/=?^_`{|}~]+)*@(?:[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?/i;
+  return regex.test(input);
+}
+
 export const signupController = (form) => {
   // agregamos un listener al form para que escuche eventos del tipo submit
   form.addEventListener('submit', (event) => {
