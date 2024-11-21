@@ -7,10 +7,12 @@ export const messageController = (messageContainer) => {
    * @returns {Function} Una funcion "showMessage" que muestra el mensaje (recibido como parametro) en el contenedor especificado.
    */
   const showMessage = (message, type = 'success') => {
-    messageContainer.classList.toggle('visually-hidden');
-    messageContainer.innerHTML = renderMessage(message, type);
+    messageContainer.appendChild(renderMessage(message, type));
     setTimeout(() => {
-      messageContainer.classList.toggle('visually-hidden');
+      const alerts = document.querySelectorAll('.alert');
+      alerts.forEach((alert) => {
+        alert.classList.add('visually-hidden');
+      });
     }, 5000);
   };
   return showMessage;
