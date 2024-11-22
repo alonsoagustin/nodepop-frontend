@@ -16,8 +16,8 @@ export const loginController = (form) => {
 
 const handlerAuthenticateUser = async (userObject) => {
   try {
-    const response = await authenticateUser(userObject);
-    localStorage.setItem('accessToken', response.accessToken);
+    const token = await authenticateUser(userObject);
+    localStorage.setItem('jwt', token);
     window.location.href = 'http://127.0.0.1:8080/index.html';
   } catch (error) {
     const form = document.querySelector('form');
