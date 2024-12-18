@@ -12,6 +12,5 @@ export const authenticateUser = async (userObject) => {
   }
 
   const { accessToken } = await response.json();
-  debugger;
   return accessToken;
 };
