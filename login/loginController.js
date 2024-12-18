@@ -18,7 +18,7 @@ const handlerAuthenticateUser = async (userObject) => {
   try {
     const token = await authenticateUser(userObject);
     localStorage.setItem('jwt', token);
-    window.location.href = 'http://127.0.0.1:8080/index.html';
+    window.location.href = 'index.html';
   } catch (error) {
     const form = document.querySelector('form');
     fireEvent(error.message, 'danger', form);
