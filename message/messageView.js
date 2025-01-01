@@ -18,3 +18,10 @@ export const renderMessage = (message, type) => {
     `;
     */
 };
+
+export const renderWelcomeMessage = (userObject) => {
+  const title = document.createElement('p');
+  title.textContent = `Welcome back ${userObject.username}`;
+  title.classList.add('fs-3', 'text-center', 'fw-bold');
+  return title;
+};
