@@ -26,30 +26,57 @@ export const postsController = async (postsContainer) => {
    */
   const URL = 'http://127.0.0.1:8000/api/posts';
   try {
-    // realizamos una solicitud a la API para obtener los anuncios
-    const posts = await getData(URL);
-    if (posts.length === 0) {
-      // lanzamos un mensaje de error al usuario si no hay anuncios
-      throw new Error('No hay anuncios que mostrar');
+    const jwt = localStorage.getItem('jwt');
+
+    if (jwt) {
+      const payload = JSON.parse(atob(jwt.split('.')[1]));
+      const userId = payload.userId;
+
+      const posts = await getData(URL);
+
+      if (posts.length === 0) {
+        // lanzamos un mensaje de error al usuario si no hay anuncios
+        throw new Error('No hay anuncios que mostrar');
+      }
+
+      postsContainer.classList.toggle('visually-hidden');
+
+      let showPosts = '';
+
+      posts.forEach((post) => {
+        if (post.owner === userId) {
+          const newPost = buildPost(post);
+          showPosts += newPost;
+        }
+      });
+
+      postsContainer.innerHTML = showPosts;
+    } else {
+      // realizamos una solicitud a la API para obtener los anuncios
+      const posts = await getData(URL);
+      if (posts.length === 0) {
+        // lanzamos un mensaje de error al usuario si no hay anuncios
+        throw new Error('No hay anuncios que mostrar');
+      }
+
+      // si hay anuncios, hacemos visible para el usuario el contenedor de anuncios
+      postsContainer.classList.toggle('visually-hidden');
+
+      // acumulador de HTML para los posts
+      let showPosts = '';
+
+      // recorremos el array de posts
+      posts.forEach((post) => {
+        // creamos el html para un post
+        const newPost = buildPost(post);
+
+        //agregamos el html de un post al acumulador
+        showPosts += newPost;
+      });
+
+      //agregamos al DOM el html de todos los posts
+      postsContainer.innerHTML = showPosts;
     }
-
-    // si hay anuncios, hacemos visible para el usuario el contenedor de anuncios
-    postsContainer.classList.toggle('visually-hidden');
-
-    // acumulador de HTML para los posts
-    let showPosts = '';
-
-    // recorremos el array de posts
-    posts.forEach((post) => {
-      // creamos el html para un post
-      const newPost = buildPost(post);
-
-      //agregamos el html de un post al acumulador
-      showPosts += newPost;
-    });
-
-    //agregamos al DOM el html de todos los posts
-    postsContainer.innerHTML = showPosts;
 
     fireEvent(' Anuncios cargados con éxito.', 'success', postsContainer);
   } catch (error) {
