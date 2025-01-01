@@ -1,6 +1,7 @@
 import { postsController } from './posts/postsController.js';
 import { messageController } from './message/messageController.js';
 import { spinnerController } from './spinner/spinnerController.js';
+import { headerController } from './header/headerController.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   /**
@@ -19,15 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const messageContainer = document.querySelector('.message__container');
   const spinnerContainer = document.querySelector('.spinner__container');
 
+  // iniciamos el controlador del header
+  headerController();
+
   // iniciamos el controlador del spinner
   spinnerController(spinnerContainer);
 
   setTimeout(() => {
     // iniciamos el controlador de mensajes
-    const showMessage = messageController(messageContainer);
+    const { showMessage, showWelcomeMessage } =
+      messageController(messageContainer);
 
     // iniciamos el controlador de anuncios
     postsController(postsContainer);
+
+    showWelcomeMessage();
 
     // configuramos un listener para mostrar mensajes al cargar los anuncios.
     postsContainer.addEventListener('userMessage', (event) => {

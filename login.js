@@ -1,9 +1,12 @@
 import { loginController } from './login/loginController.js';
 import { messageController } from './message/messageController.js';
+import { headerController } from './header/headerController.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('form');
   const messageContainer = document.querySelector('.message__container');
+
+  headerController();
 
   loginController(form);
 
