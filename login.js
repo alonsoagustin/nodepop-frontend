@@ -1,18 +1,32 @@
-import { loginController } from './login/loginController.js';
-import { messageController } from './message/messageController.js';
 import { headerController } from './header/headerController.js';
+import { spinnerController } from './spinner/spinnerController.js';
+import { messageController } from './message/messageController.js';
+import { loginController } from './login/loginController.js';
+import { hasToken } from './lib/authUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector('form');
+  // seleccionamos los elementos necesarios del DOM
+  const buttonContainer = document.querySelector('.button__container');
+  const spinnerContainer = document.querySelector('.spinner__container');
   const messageContainer = document.querySelector('.message__container');
+  const form = document.querySelector('form');
 
-  headerController();
+  // verificamos si el usuario tiene un token.
+  const userIsAuthenticated = hasToken();
 
-  loginController(form);
+  // iniciamos el controlador del header.
+  const { handleHeaderButton } = headerController(buttonContainer);
 
-  const showMessage = messageController(messageContainer);
+  // iniciamos el controlador del spinner.
+  const { handleSpinner } = spinnerController(spinnerContainer);
 
-  form.addEventListener('userMessage', (event) => {
-    showMessage(event.detail.message, event.detail.type);
-  });
+  // iniciamos el controlador de mensajes.
+  const { showNotification } = messageController(messageContainer);
+
+  // iniciamos el controlador de login.
+  const { handleAuthUser } = loginController(form);
+
+  handleSpinner();
+  handleHeaderButton(userIsAuthenticated);
+  handleAuthUser();
 });
