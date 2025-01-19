@@ -1,27 +1,13 @@
-export const renderMessage = (message, type) => {
-  /**
-   * Genera un bloque de HTML para mostrar un mensaje de error al usuario.
-   *
-   * @function
-   * @param {string} error - El mensaje de error que se mostrará dentro del bloque HTML.
-   * @returns {string} Una cadena de texto con el maquetado HTML del mensaje de error.
-   */
-  const div = document.createElement('div');
-  div.classList.add('alert', `alert-${type}`, 'text-center', 'mb-2');
-  div.textContent = `${message}`;
-  return div;
-  /*
-  return `
-    <div class="alert alert-${type} text-center mb-0" role="alert">
-      ${message}
-    </div>
-    `;
-    */
-};
-
-export const renderWelcomeMessage = (userObject) => {
-  const title = document.createElement('p');
-  title.textContent = `Welcome back ${userObject.username}`;
-  title.classList.add('fs-3', 'text-center', 'fw-bold');
-  return title;
+export const createMessage = (content, type = null, userObject = null) => {
+  const message = document.createElement('p');
+  if (userObject) {
+    // renderizamos mensaje de bienvenida
+    message.textContent = `Welcome back ${userObject.username.split('@'[0].toLowerCase())}!`;
+    message.classList.add('fs-3', 'text-center', 'fw-bold');
+    return message;
+  } else {
+    message.classList.add('alert', `alert-${type}`, 'text-center', 'mb-2');
+    message.textContent = `${content}`;
+    return message;
+  }
 };
