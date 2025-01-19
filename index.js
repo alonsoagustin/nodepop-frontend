@@ -40,4 +40,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // iniciamos el controlador de los botones de acción.
   const { handlePostActionButtons } = postActionController(postsContainer);
+
+  // renderizamos botones de signup, login o logout segun corresponda.
+  handleHeaderButton(userIsAuthenticated);
+
+  setTimeout(async () => {
+    try {
+      await getAllPosts();
+    } catch (error) {
+      // lanzamos el error intencional para detener la ejecución.
+      throw error;
+    }
+
+    if (userIsAuthenticated) {
+      handleNewPostButton();
+      handleFiltertButton();
+      handlePostActionButtons();
+
+      filterAndNewPostContainer.classList.toggle('visually-hidden');
+
+      const filterButtons = filterContainer.querySelectorAll('.btn');
+
+      handleFilterSelection(filterButtons);
+
+      // escuchamos en todos los filtros un evento del tipo appNotification.
+      filterButtons.forEach((filter) =>
+        filter.addEventListener('appNotification', (event) => {
+          const { type } = event.detail;
+
+          if (type === 'loading') {
+            handleSpinner();
+          }
+
+          if (type === 'userPosts') {
+            setTimeout(async () => {
+              const response = await getUserPosts();
+              if (response) {
+                handlePostActionButtons();
+              }
+            }, 600);
+          }
+
+          if (type === 'allPosts') {
+            setTimeout(async () => {
+              await getAllPosts();
+              handlePostActionButtons();
+            }, 600);
+          }
+
+          if (type === 'favoritePosts') {
+            setTimeout(async () => {
+              const response = await getFavoritePosts();
+              if (response) {
+                handlePostActionButtons();
+              }
+            }, 600);
+          }
+        }),
+      );
+    }
+  }, 600);
 });
