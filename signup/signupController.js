@@ -14,4 +14,20 @@ export const signupController = (form) => {
 
     return { userEmail, userPassword, userPasswordConfirm };
   };
+
+  const handleValidateData = (userEmail, userPassword, userPasswordConfirm) => {
+    const errors = [];
+
+    // validamos el formato del correo.
+    if (!validateEmailFormat(userEmail)) {
+      errors.push('email');
+    }
+
+    // validamos la contraseña.
+    if (userPassword !== userPasswordConfirm) {
+      // si no pasa el test agregamos un string al ARRAY ERRORS.
+      errors.push('password');
+    }
+    return errors;
+  };
 };
