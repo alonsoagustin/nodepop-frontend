@@ -100,4 +100,41 @@ document.addEventListener('DOMContentLoaded', () => {
       );
     }
   }, 600);
+
+  // escuchamos en postsContainer un evento del tipo appNotification.
+  postsContainer.addEventListener('appNotification', (event) => {
+    const { content, type } = event.detail;
+
+    if (type === 'loading') {
+      handleSpinner();
+    }
+
+    if (type === 'success') {
+      handleSpinner();
+      showNotification(content, type);
+    }
+
+    if (type === 'danger') {
+      handleSpinner();
+      showNotification(content, type);
+    }
+
+    if (type === 'addFavorite') {
+      handleSpinner();
+      showNotification(content, 'success');
+    }
+
+    if (type === 'removeFavorite') {
+      handleSpinner();
+      showNotification(content, 'success');
+    }
+
+    if (type === 'deleted') {
+      handleSpinner();
+      showNotification(content, 'success');
+      setTimeout(() => {
+        location.href = 'index.html';
+      }, 800);
+    }
+  });
 });
