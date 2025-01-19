@@ -80,4 +80,43 @@ export const postsController = (container) => {
         fireNotification('danger', container, 'No tienes anuncios marcados como favoritos.');
     }
   };
+
+  const showPosts = (postsObject) => {
+    try {
+      // lanzamos un mensaje de error al usuario si no hay anuncios.
+      if (postsObject.length === 0) {
+        throw new Error('No hay anuncios que mostrar');
+      }
+
+      // reseteamos el contenido de postsContainer.
+      container.innerHTML = '';
+
+      // agregamos a postsContainer todos los anuncios que existan en el array posts.
+      postsObject.forEach((post) => {
+        const builtPost = buildPost(post);
+        container.appendChild(builtPost);
+      });
+
+      const pictures = document.querySelectorAll('.post__picture');
+      pictures.forEach((picture) =>
+        picture.addEventListener('click', () => {
+          const postId = picture.getAttribute('id');
+          console.log(postId);
+          localStorage.setItem('postSelected', postId);
+          window.location.href = `post.html`;
+        }),
+      );
+
+      // lanzamos un evento del tipo appNotification para informar que ya finalizo el proceso.
+      fireNotification('success', container, 'Anuncios cargados con éxito.');
+    } catch (error) {
+      // lanzamos un evento del tipo appNotification para informar que ya finalizo el proceso.
+      fireNotification('loadingComplete', container);
+
+      // lanzamos un evento del tipo appNotification para informar el error en la carga de anuncios.
+      fireNotification('danger', container, error.message);
+    }
+  };
+
+  return { getAllPosts, getUserPosts, getFavoritePosts };
 };
