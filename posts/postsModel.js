@@ -38,3 +38,20 @@ export const createPost = async (postObject) => {
     throw error;
   }
 };
+
+export const deletePost = async (postId) => {
+  try {
+    const jwt = localStorage.getItem('jwt');
+
+    const response = await fetch(`${config.HOST}${config.POSTS}/${postId}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', Authorization: `Baerer ${jwt}` },
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText || 'Error en la solicitud');
+    }
+  } catch (error) {
+    throw error;
+  }
+};
