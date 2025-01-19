@@ -121,4 +121,32 @@ export const postActionController = (container) => {
       }
     });
   };
+
+  const handleDeleteButton = (post) => {
+    try {
+      const deleteButton = post.querySelector('.delete__button');
+
+      if (!deleteButton) return;
+
+      deleteButton.addEventListener('click', async () => {
+        const { currentPost, userId, postId } = getPostAndUserData(post);
+        const userIsOwner = currentPost.userId === userId;
+
+        if (userIsOwner) {
+          await deletePost(postId);
+        } else {
+          throw new Error('unauthorized');
+        }
+        fireNotification('loading', container);
+        fireNotification('deleted', container, 'Anuncio eliminado éxito.');
+      });
+    } catch (error) {
+      fireNotification('loading', container);
+      if (error.message === 'unauthorized') {
+        fireNotification('danger', container, 'No puedes eliminar este anuncio.');
+      } else {
+        throw error;
+      }
+    }
+  };
 };
