@@ -29,4 +29,27 @@ document.addEventListener('DOMContentLoaded', () => {
   handleSpinner();
   handleHeaderButton(userIsAuthenticated);
   handleAuthUser();
+
+  // escuchamos en postsContainer un evento del tipo appNotification.
+  form.addEventListener('appNotification', (event) => {
+    const { content, type } = event.detail;
+    if (type === 'loading') {
+      handleSpinner();
+    }
+    if (type === 'success') {
+      setTimeout(() => {
+        handleSpinner();
+        showNotification(content, type);
+        setTimeout(() => {
+          location.href = 'index.html';
+        }, 1000);
+      }, 600);
+    }
+    if (type === 'danger') {
+      setTimeout(() => {
+        handleSpinner();
+        showNotification(content, type);
+      }, 600);
+    }
+  });
 });
