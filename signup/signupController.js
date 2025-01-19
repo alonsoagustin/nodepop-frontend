@@ -30,4 +30,31 @@ export const signupController = (form) => {
     }
     return errors;
   };
+
+  const handlerCreateUser = async (userObject) => {
+    try {
+      await createUser(userObject);
+
+      // lanzamos un evento del tipo 'appNotification' confirmando el inicio de sesión.
+      fireNotification('loading', form);
+
+      // lanzamos un evento del tipo appNotification.
+      fireNotification('created', form, 'Usuario creado con éxito.');
+
+      const token = await authenticateUser(userObject);
+
+      localStorage.setItem('jwt', token);
+
+      // lanzamos un evento del tipo appNotification.
+      fireNotification('success', form, 'Sesión iniciada con éxito.');
+    } catch (error) {
+      // lanzamos un evento del tipo 'appNotification' confirmando el inicio de sesión.
+      fireNotification('loading', form);
+      if (error.message === 'Failed to fetch') {
+        fireNotification('danger', form, '¡Ups! No pudimos conectar con el servidor.');
+      } else {
+        fireNotification('danger', form, error.message);
+      }
+    }
+  };
 };
