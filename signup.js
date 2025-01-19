@@ -1,21 +1,58 @@
+import { headerController } from './header/headerController.js';
+import { spinnerController } from './spinner/spinnerController.js';
 import { messageController } from './message/messageController.js';
 import { signupController } from './signup/signupController.js';
-import { headerController } from './header/headerController.js';
+import { hasToken } from './lib/authUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector('form');
+  // seleccionamos los elementos necesarios del DOM
+  const buttonContainer = document.querySelector('.button__container');
+  const spinnerContainer = document.querySelector('.spinner__container');
   const messageContainer = document.querySelector('.message__container');
+  const form = document.querySelector('form');
 
-  // iniciamos headerController
-  headerController();
+  // verificamos si el usuario tiene un token.
+  const userIsAuthenticated = hasToken();
 
-  // iniciamos messageController
-  const showMessage = messageController(messageContainer);
+  // iniciamos el controlador del header.
+  const { handleHeaderButton } = headerController(buttonContainer);
 
-  // iniciar signupController
-  signupController(form);
+  // iniciamos el controlador del spinner.
+  const { handleSpinner } = spinnerController(spinnerContainer);
 
-  form.addEventListener('userMessage', (event) => {
-    showMessage(event.detail.message, event.detail.type);
+  // iniciamos el controlador de mensajes.
+  const { showNotification } = messageController(messageContainer);
+
+  // iniciamos el controlador de signup.
+  const { handleSignup } = signupController(form);
+
+  handleSpinner();
+  handleHeaderButton(userIsAuthenticated);
+  handleSignup();
+
+  // escuchamos eventos del tipo userMessage (CustomEVent) en el formulario.
+  form.addEventListener('appNotification', (event) => {
+    const { content, type } = event.detail;
+    if (type === 'loading') {
+      handleSpinner();
+    }
+    if (type === 'created') {
+      setTimeout(() => {
+        handleSpinner();
+        showNotification(content, 'success');
+      }, 600);
+    }
+
+    if (type === 'success') {
+      setTimeout(() => {
+        location.href = 'index.html';
+      }, 2000);
+    }
+    if (type === 'danger') {
+      setTimeout(() => {
+        handleSpinner();
+        showNotification(content, type);
+      }, 600);
+    }
   });
 });
