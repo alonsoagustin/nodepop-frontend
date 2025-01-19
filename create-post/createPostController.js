@@ -18,4 +18,26 @@ export const createPostController = (form) => {
       handleCreatePost(postObject, isAuthenticated);
     });
   };
+
+  const handleCreatePost = async (postObject, isAuthenticated) => {
+    try {
+      if (!isAuthenticated) {
+        throw new Error('login');
+      }
+
+      await createPost(postObject);
+
+      fireNotification('loading', form);
+      fireNotification('created', form, 'Anuncio creado con éxito.');
+    } catch (error) {
+      fireNotification('loading', form);
+      if (error.message === 'login') {
+        fireNotification('login', form, 'Antes de crear un anuncio debes iniciar sesión.');
+      } else {
+        fireNotification('danger', form, error.message);
+      }
+    }
+  };
+
+  return { handleFormSubmit };
 };
