@@ -1,44 +1,43 @@
-import { postsController } from './posts/postsController.js';
-import { messageController } from './message/messageController.js';
-import { spinnerController } from './spinner/spinnerController.js';
 import { headerController } from './header/headerController.js';
+import { spinnerController } from './spinner/spinnerController.js';
+import { messageController } from './message/messageController.js';
+import { postsController } from './posts/postsController.js';
+import { newPostController } from './newPost/newPostController.js';
+import { filterController } from './filter/filterController.js';
+import { postActionController } from './postAction/postActionController.js';
+import { hasToken } from './lib/authUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  /**
-   * Inicializa los controladores de posts y mensajes al cargar la página.
-   *
-   * Este código se ejecuta cuando el DOM ha sido completamente cargado. Realiza las siguientes tareas:
-   * 1. Muestra un spinner de carga durante un breve intervalo.
-   * 2. Obtiene los elementos del contenedor de posts y el contenedor de mensajes.
-   * 3. Inicializa el controlador de posts, que se encarga de obtener y mostrar los anuncios.
-   * 4. Inicializa el controlador de mensajes, que se utiliza para mostrar errores.
-   * 5. Configura un listener para mostrar mensajes de error si ocurre un fallo al cargar los posts.
-   *
-   */
-
-  const postsContainer = document.querySelector('.posts__container');
-  const messageContainer = document.querySelector('.message__container');
+  // seleccionamos los elementos necesarios del DOM
+  const buttonContainer = document.querySelector('.button__container');
   const spinnerContainer = document.querySelector('.spinner__container');
+  const messageContainer = document.querySelector('.message__container');
+  const filterContainer = document.querySelector('.filter__container');
+  const newPostContainer = document.querySelector('.new-post__container');
+  const postsContainer = document.querySelector('.posts__container');
+  const filterAndNewPostContainer = document.querySelector('.filter-and-new-post__container');
 
-  // iniciamos el controlador del header
-  headerController();
+  // verificamos si el usuario tiene un token.
+  const userIsAuthenticated = hasToken();
 
-  // iniciamos el controlador del spinner
-  spinnerController(spinnerContainer);
+  // iniciamos el controlador del header.
+  const { handleHeaderButton } = headerController(buttonContainer);
 
-  setTimeout(() => {
-    // iniciamos el controlador de mensajes
-    const { showMessage, showWelcomeMessage } =
-      messageController(messageContainer);
+  // iniciamos el controlador del spinner.
+  const { handleSpinner } = spinnerController(spinnerContainer);
 
-    // iniciamos el controlador de anuncios
-    postsController(postsContainer);
+  // iniciamos el controlador de mensajes.
+  const { showNotification } = messageController(messageContainer);
 
-    showWelcomeMessage();
+  // iniciamos el controlador de botones de filtro.
+  const { handleFiltertButton, handleFilterSelection } = filterController(filterContainer);
 
-    // configuramos un listener para mostrar mensajes al cargar los anuncios.
-    postsContainer.addEventListener('userMessage', (event) => {
-      showMessage(event.detail.message, event.detail.type);
-    });
-  }, 3000);
+  // iniciamos el controlador de botón de new post.
+  const { handleNewPostButton } = newPostController(newPostContainer);
+
+  // iniciamos el controlador de anuncios.
+  const { getAllPosts, getUserPosts, getFavoritePosts } = postsController(postsContainer);
+
+  // iniciamos el controlador de los botones de acción.
+  const { handlePostActionButtons } = postActionController(postsContainer);
 });
