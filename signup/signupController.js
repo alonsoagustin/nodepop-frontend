@@ -57,4 +57,31 @@ export const signupController = (form) => {
       }
     }
   };
+
+  const handleSignup = () => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const { userEmail, userPassword, userPasswordConfirm } = getFormData();
+      const errors = handleValidateData(userEmail, userPassword, userPasswordConfirm);
+
+      if (errors.length > 0) {
+        // lanzamos un evento del tipo appNotification con cada error.
+        errors.forEach((error) => {
+          fireNotification('loading', form);
+          if (error === 'email') fireNotification('danger', form, 'Formato de correo inválido.');
+          if (error === 'password')
+            fireNotification('danger', form, 'Las contraseñas no coinciden.');
+        });
+      } else {
+        const userObject = {
+          username: userEmail,
+          password: userPassword,
+        };
+        handlerCreateUser(userObject);
+      }
+    });
+  };
+
+  return { handleSignup };
 };
