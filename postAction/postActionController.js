@@ -165,4 +165,18 @@ export const postActionController = (container) => {
 
     return { currentPost, userId, postId };
   };
+
+  const handlePostActionButtons = () => {
+    // seleccionamos todos los anuncios.
+    const posts = document.querySelectorAll('article');
+
+    // en cada anuncio renderizamos los botones de acción según corresponda.
+    posts.forEach((post) => {
+      showActionButton(post);
+      handleFavoriteButton(post);
+      handleDeleteButton(post);
+    });
+  };
+
+  return { handlePostActionButtons };
 };
