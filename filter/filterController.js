@@ -20,4 +20,20 @@ export const filterController = (filterContainer) => {
     const buttons = createButton(favoritePostsButton, allPostsButton, myPostsButton);
     buttons.forEach((button) => filterContainer.appendChild(button));
   };
+
+  const handleFilterSelection = (filterButtons) => {
+    // si el usuario hace click en un filtro, lo deshabilitamos.
+    filterButtons.forEach((button) =>
+      button.addEventListener('click', () => {
+        button.classList.add('disabled');
+        filterButtons.forEach((otherButton) => {
+          if (otherButton !== button) {
+            otherButton.classList.remove('disabled');
+          }
+        });
+      }),
+    );
+  };
+
+  return { handleFiltertButton, handleFilterSelection };
 };
