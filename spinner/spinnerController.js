@@ -1,8 +1,6 @@
-import { buildSpinner } from './spinnerView.js';
-
 export const spinnerController = (spinnerContainer) => {
-  spinnerContainer.innerHTML = buildSpinner();
-  setTimeout(() => {
+  const handleSpinner = () => {
     spinnerContainer.classList.toggle('visually-hidden');
-  }, 3000);
+  };
+  return { handleSpinner };
 };
