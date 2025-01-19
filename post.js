@@ -3,7 +3,7 @@ import { spinnerController } from './spinner/spinnerController.js';
 import { messageController } from './message/messageController.js';
 import { postDetailController } from './postDetail/postDetailController.js';
 import { postActionController } from './postAction/postActionController.js';
-import { hasToken } from './lib/user.js';
+import { hasToken } from './lib/authUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // seleccionamos los elementos necesarios del DOM
