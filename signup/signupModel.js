@@ -1,15 +1,20 @@
+import { config } from '../config.js';
 export const createUser = async (userObject) => {
-  const URL = 'http://127.0.0.1:8000/auth/register';
+  try {
+    // hacemos un fetch a la API
+    const response = await fetch(`${config.HOST}${config.REGISTER}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userObject),
+    });
 
-  const response = await fetch(URL, {
-    method: 'POST',
-    body: JSON.stringify(userObject),
-    headers: { 'Content-Type': 'application/json' },
-  });
-
-  const res = await response.json();
-
-  if (!response.ok) {
-    throw new Error(res.message);
+    // si la API no responde un status code OK (code status entre 200-299)...
+    if (!response.ok) {
+      console.error('error al crear la cuenta');
+      throw new Error(response.statusText || 'Error en la solicitud');
+    }
+  } catch (error) {
+    // el error será caputrado en otro sitio de la aplicación.
+    throw error;
   }
 };
