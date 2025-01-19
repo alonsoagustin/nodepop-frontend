@@ -1,4 +1,4 @@
-import { createMessage } from '../message/messageView.js';
+import { createMessage } from '../view/messageView.js';
 
 export const messageController = (messageContainer) => {
   const showNotification = (content, type) => {

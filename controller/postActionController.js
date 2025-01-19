@@ -1,6 +1,6 @@
 import { getUserId } from '../lib/authUtils.js';
 import { createButton } from '../lib/createButton.js';
-import { deletePost, getPosts, updatePost } from '../posts/postsModel.js';
+import { deletePost, getPosts, updatePost } from '../model/postsModel.js';
 import { fireNotification } from '../lib/customEvent.js';
 
 export const postActionController = (container) => {

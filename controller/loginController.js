@@ -1,4 +1,4 @@
-import { authenticateUser } from './loginModel.js';
+import { authenticateUser } from '../model/loginModel.js';
 import { fireNotification } from '../lib/customEvent.js';
 
 export const loginController = (form) => {

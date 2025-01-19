@@ -1,8 +1,8 @@
-import { headerController } from './header/headerController.js';
-import { spinnerController } from './spinner/spinnerController.js';
-import { messageController } from './message/messageController.js';
-import { loginController } from './login/loginController.js';
-import { hasToken } from './lib/authUtils.js';
+import { headerController } from '../controller/headerController.js';
+import { spinnerController } from '../controller/spinnerController.js';
+import { messageController } from '../controller/messageController.js';
+import { loginController } from '../controller/loginController.js';
+import { hasToken } from '../lib/authUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // seleccionamos los elementos necesarios del DOM

@@ -1,7 +1,7 @@
-import { buildPost } from '../posts/postsView.js';
+import { buildPost } from '../view/postsView.js';
 import { fireNotification } from '../lib/customEvent.js';
 import { getUserId } from '../lib/authUtils.js';
-import { getPosts } from '../posts/postsModel.js';
+import { getPosts } from '../model/postsModel.js';
 
 export const postsController = (container) => {
   const getAllPosts = async () => {

@@ -1,11 +1,11 @@
-import { headerController } from './header/headerController.js';
-import { spinnerController } from './spinner/spinnerController.js';
-import { messageController } from './message/messageController.js';
-import { postsController } from './posts/postsController.js';
-import { newPostController } from './newPost/newPostController.js';
-import { filterController } from './filter/filterController.js';
-import { postActionController } from './postAction/postActionController.js';
-import { hasToken } from './lib/authUtils.js';
+import { headerController } from '../controller/headerController.js';
+import { spinnerController } from '../controller/spinnerController.js';
+import { messageController } from '../controller/messageController.js';
+import { postsController } from '../controller/postsController.js';
+import { newPostController } from '../controller/newPostController.js';
+import { filterController } from '../controller/filterController.js';
+import { postActionController } from '../controller/postActionController.js';
+import { hasToken } from '../lib/authUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // seleccionamos los elementos necesarios del DOM

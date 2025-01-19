@@ -1,7 +1,7 @@
-import { createUser } from './signupModel.js';
+import { createUser } from '../model/signupModel.js';
 import { fireNotification } from '../lib/customEvent.js';
 import { validateEmailFormat } from '../lib/validateEmail.js';
-import { authenticateUser } from '../login/loginModel.js';
+import { authenticateUser } from '../model/loginModel.js';
 
 export const signupController = (form) => {
   const getFormData = () => {

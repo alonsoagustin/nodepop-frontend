@@ -1,5 +1,5 @@
 import { fireNotification } from '../lib/customEvent.js';
-import { buildPostDetail } from './postDetailView.js';
+import { buildPostDetail } from '../view/postDetailView.js';
 
 export const postDetailController = (mainSection) => {
   const handlePostDetail = () => {

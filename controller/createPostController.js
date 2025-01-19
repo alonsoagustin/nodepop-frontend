@@ -1,5 +1,5 @@
 import { fireNotification } from '../lib/customEvent.js';
-import { createPost } from '../posts/postsModel.js';
+import { createPost } from '../model/postsModel.js';
 
 export const createPostController = (form) => {
   const handleFormSubmit = (isAuthenticated) => {
