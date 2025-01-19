@@ -149,4 +149,20 @@ export const postActionController = (container) => {
       }
     }
   };
+
+  const getPostAndUserData = (post) => {
+    // obtenemos el id del usuario decodificando el token guardado en el localStorage.
+    const userId = getUserId();
+
+    // obtenemos el array de anuncios desde el localStorage.
+    const posts = JSON.parse(localStorage.getItem('posts'));
+
+    // obtenemos el id del anuncio desde el atributo id o desde el localStorage.
+    const postId = +post.getAttribute('id') || +localStorage.getItem('postSelected');
+
+    // obtenemos el objeto del anuncio seleccionado iterando el array de anuncios obtenido desde el localStorage.
+    const [currentPost] = posts.filter((post) => post.id === postId);
+
+    return { currentPost, userId, postId };
+  };
 };
