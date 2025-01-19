@@ -1,7 +1,4 @@
-import { createButton } from '../lib/createButton.js';
 import { fireNotification } from '../lib/customEvent.js';
-import { getUserId } from '../lib/user.js';
-import { deletePost, getPosts, updatePost } from '../posts/postsModel.js';
 import { buildPostDetail } from './postDetailView.js';
 
 export const postDetailController = (mainSection) => {
