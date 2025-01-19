@@ -55,3 +55,19 @@ export const deletePost = async (postId) => {
     throw error;
   }
 };
+
+export const updatePost = async (postId, updateData) => {
+  try {
+    const response = await fetch(`${config.HOST}${config.POSTS}/${postId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ favoritedBy: updateData }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error en la solicitud');
+    }
+  } catch (error) {
+    throw error;
+  }
+};
