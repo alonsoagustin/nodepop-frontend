@@ -27,4 +27,38 @@ document.addEventListener('DOMContentLoaded', () => {
   handleSpinner();
   handleHeaderButton(userIsAuthenticated);
   handleFormSubmit(userIsAuthenticated);
+
+  // escuchamos en form un evento del tipo appNotification.
+  form.addEventListener('appNotification', (event) => {
+    event.preventDefault();
+    const { content, type } = event.detail;
+    if (type === 'loading') {
+      handleSpinner();
+    }
+
+    if (type === 'created') {
+      setTimeout(() => {
+        handleSpinner();
+        showNotification(content, 'success');
+        setTimeout(() => {
+          location.href = 'index.html';
+        }, 600);
+      }, 600);
+    }
+
+    if (type === 'login') {
+      setTimeout(() => {
+        handleSpinner();
+        showNotification(content, 'danger');
+        setTimeout(() => {
+          location.href = 'login.html';
+        }, 2000);
+      }, 600);
+    }
+
+    if (type === 'danger') {
+      handleSpinner();
+      showNotification(content, type);
+    }
+  });
 });
