@@ -45,4 +45,39 @@ export const postsController = (container) => {
       fireNotification('danger', container, error.message);
     }
   };
+
+  const getFavoritePosts = async () => {
+    try {
+      // obtenemos el ID del usuario que ha iniciado sesión.
+      const userId = getUserId();
+
+      // obtenemos todos los anuncios.
+      const allPosts = await getPosts();
+
+      const favoritesPosts = [];
+
+      // filtramos los anuncios favoritos (post.isFavorite === True)
+      allPosts.forEach((post) => {
+        if (post.favoritedBy.includes(userId)) {
+          favoritesPosts.push(post);
+        }
+      });
+
+      // lanzamos un error si no hay anuncios marcados como favoritos.
+      if (favoritesPosts.length === 0) {
+        throw new Error('no content');
+      }
+
+      // llamamos a la funcion showPosts.
+      showPosts(favoritesPosts);
+
+      return favoritesPosts;
+    } catch (error) {
+      if (error.message === 'Failed to fetch') {
+        fireNotification('danger', container, '¡Ups! No pudimos conectar con el servidor.');
+      }
+      if (error.message == 'no content')
+        fireNotification('danger', container, 'No tienes anuncios marcados como favoritos.');
+    }
+  };
 };
