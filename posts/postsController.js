@@ -24,4 +24,25 @@ export const postsController = (container) => {
       throw error;
     }
   };
+
+  const getUserPosts = async () => {
+    try {
+      const userId = getUserId();
+
+      const userPosts = await getPosts(`http://127.0.0.1:8000/api/posts?userId=${userId}`);
+
+      if (userPosts.length === 0) {
+        throw new Error('No tienes ningún anuncio.');
+      }
+
+      showPosts(userPosts);
+
+      return userPosts;
+    } catch (error) {
+      if (error.message === 'Failed to fetch') {
+        fireNotification('danger', container, '¡Ups! No pudimos conectar con el servidor.');
+      }
+      fireNotification('danger', container, error.message);
+    }
+  };
 };
