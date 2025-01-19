@@ -1,16 +1,26 @@
+import { config } from '../config.js';
+
 export const authenticateUser = async (userObject) => {
-  const URL = 'http://127.0.0.1:8000/auth/login';
+  try {
+    const response = await fetch(`${config.HOST}${config.LOGIN}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userObject),
+    });
 
-  const response = await fetch(URL, {
-    method: 'POST',
-    body: JSON.stringify(userObject),
-    headers: { 'Content-Type': 'application/json' },
-  });
+    // si la API no responde un status code OK (code status entre 200-299)...
+    if (!response.ok) {
+      throw new Error(`Error: usuario y/o contraseña incorrectos.`);
+    }
 
-  if (!response.ok) {
-    throw new Error(res.message);
+    // si la API responde un status code OK
+    // transformamos la respuesta en JSON y hacemos destructuring
+    const { accessToken } = await response.json();
+
+    //devolvemos el token
+    return accessToken;
+  } catch (error) {
+    // el error será capturado por el handlerAuthenticateUser
+    throw error;
   }
-
-  const { accessToken } = await response.json();
-  return accessToken;
 };
