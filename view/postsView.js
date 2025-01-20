@@ -1,9 +1,14 @@
 export const buildPost = (postObject) => {
-  const post = document.createElement('article');
+  const post = document.createElement("article");
 
-  post.setAttribute('id', `${postObject.id}`);
+  post.setAttribute("id", `${postObject.id}`);
 
-  post.classList.add('post', 'd-flex', 'flex-column', 'justify-content-between');
+  post.classList.add(
+    "post",
+    "d-flex",
+    "flex-column",
+    "justify-content-between"
+  );
 
   post.style.cssText = `
     padding: 1rem;
@@ -29,8 +34,8 @@ export const buildPost = (postObject) => {
         <p class="post__description mb-2" style="font-size: 1rem; font-style: italic;">${postObject.shortDescription}</p>
       </div>
       <div class="post__footer d-flex justify-content-between align-item-center gap-3 p-1">
-        <div class="post__price__container">
-          <p class="post__price mb-0" style="font-size: 1.75rem; font-weight: bold;">&#8364 ${postObject.price ?? '0.00'}</p>
+        <div class="post__price__container" style="min-width: 57px;">
+          <p class="post__price mb-0" style="font-size: 1.75rem; font-weight: bold;">&#8364 ${postObject.price ?? "0.00"}</p>
         </div>
         <div class="post__action-buttons d-flex align-item-center gap-2">
 
@@ -38,8 +43,8 @@ export const buildPost = (postObject) => {
       </div>
     </div>`;
 
-  post.addEventListener('click', async () => {
-    localStorage.setItem('postSelected', postObject.id);
+  post.addEventListener("click", async () => {
+    localStorage.setItem("postSelected", postObject.id);
   });
 
   return post;
